@@ -1,5 +1,6 @@
 package com.myspringproject.springprj.entity;
 
+import com.myspringproject.springprj.dto.EnderecoDTO;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,4 +34,12 @@ public class MedicoEntity {
     private Endereco endereco;
 
 
+    public void atualizarEndereco(EnderecoDTO dto) {
+        if (dto.logradouro() != null) this.endereco.setLogradouro(dto.logradouro());
+        if (dto.bairro() != null) this.endereco.setBairro(dto.bairro());
+        if (dto.cidade() != null) this.endereco.setCidade(dto.cidade());
+        if (dto.uf() != null) this.endereco.setUf(dto.uf());
+        if (dto.cep() != null) this.endereco.setCep(dto.cep());
+        if (dto.numero() != null) this.endereco.setNumero(dto.numero());
+    }
 }

@@ -1,5 +1,6 @@
 package com.myspringproject.springprj.controller;
 
+import com.myspringproject.springprj.dto.MedicoAtualizacaoDTO;
 import com.myspringproject.springprj.dto.MedicoDTO;
 import com.myspringproject.springprj.entity.MedicoEntity;
 import com.myspringproject.springprj.service.MedicoService;
@@ -8,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/medicos")
@@ -20,8 +23,13 @@ public class MedicoController {
     }
 
     @PostMapping
-    public MedicoEntity save(@RequestBody MedicoEntity medicoEntity){
-        return medicoService.save(medicoEntity);
+    public ResponseEntity<MedicoDTO> save(@RequestBody MedicoEntity medicoEntity) {
+        MedicoEntity medico = medicoService.cadastrar(medicoEntity);
+        URI uri = URI.create("/medicos/" + medico.getId());
+
+        return ResponseEntity
+                .created(uri)
+                .body(new MedicoDTO(medico));
     }
 
 //    @GetMapping
@@ -39,4 +47,10 @@ public class MedicoController {
         medicoService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+    @PutMapping
+    public ResponseEntity<Void> atualizar(@RequestBody MedicoAtualizacaoDTO dto) {
+        medicoService.atualizar(dto);
+        return ResponseEntity.noContent().build();
+    }
+
 }

@@ -1,11 +1,13 @@
 package com.myspringproject.springprj.service;
 
+import com.myspringproject.springprj.dto.MedicoAtualizacaoDTO;
 import com.myspringproject.springprj.dto.MedicoDTO;
 import com.myspringproject.springprj.entity.MedicoEntity;
 import com.myspringproject.springprj.repository.MedicoRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MedicoService {
@@ -37,8 +39,24 @@ public class MedicoService {
     public MedicoEntity getMedicoById(Long id){
         return medicoRepository.findById(id).get();
     }
-    public MedicoEntity save(MedicoEntity medicoEntity){
+    public MedicoEntity cadastrar(MedicoEntity medicoEntity){
         return medicoRepository.save(medicoEntity);
     }
 
+    @Transactional
+    public void atualizar(MedicoAtualizacaoDTO dto) {
+        MedicoEntity medico = medicoRepository.getReferenceById(dto.id());
+
+        if (dto.nome() != null) {
+            medico.setNome(dto.nome());
+        }
+
+        if (dto.telefone() != null) {
+            medico.setTelefone(dto.telefone());
+        }
+
+        if (dto.endereco() != null) {
+            medico.atualizarEndereco(dto.endereco());
+        }
+    }
 }
