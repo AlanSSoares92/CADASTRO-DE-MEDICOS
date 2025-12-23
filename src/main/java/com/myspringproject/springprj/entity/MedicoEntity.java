@@ -1,6 +1,8 @@
 package com.myspringproject.springprj.entity;
 
 import com.myspringproject.springprj.dto.EnderecoDTO;
+import com.myspringproject.springprj.dto.MedicoDTO;
+import com.myspringproject.springprj.dto.MedicoResponseDTO;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,13 +35,42 @@ public class MedicoEntity {
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
+    public MedicoEntity(MedicoDTO medicoDTO) {
+        this.nome = medicoDTO.nome();
+        this.email = medicoDTO.email();
+        this.telefone = medicoDTO.telefone();
+        this.crm = medicoDTO.crm();
+        this.especialidade = medicoDTO.especialidade();
+        this.endereco = toEndereco(medicoDTO.endereco());
+    }
+    private Endereco toEndereco(EnderecoDTO dto) {
+        return new Endereco(
+                dto.getLogradouro(),
+                dto.getComplemento(),
+                dto.getBairro(),
+                dto.getCidade(),
+                dto.getCep(),
+                dto.getUf(),
+                dto.getNumero()
+        );
+    }
+
+
+
+    public MedicoEntity(MedicoResponseDTO medicoDTO) {
+        this.nome = medicoDTO.nome();
+        this.email = medicoDTO.email();
+        this.crm = medicoDTO.crm();
+        this.especialidade = medicoDTO.especialidade();
+
+    }
 
     public void atualizarEndereco(EnderecoDTO dto) {
-        if (dto.logradouro() != null) this.endereco.setLogradouro(dto.logradouro());
-        if (dto.bairro() != null) this.endereco.setBairro(dto.bairro());
-        if (dto.cidade() != null) this.endereco.setCidade(dto.cidade());
-        if (dto.uf() != null) this.endereco.setUf(dto.uf());
-        if (dto.cep() != null) this.endereco.setCep(dto.cep());
-        if (dto.numero() != null) this.endereco.setNumero(dto.numero());
+        if (dto.getLogradouro() != null) this.endereco.setLogradouro(dto.getLogradouro());
+        if (dto.getBairro() != null) this.endereco.setBairro(dto.getBairro());
+        if (dto.getCidade() != null) this.endereco.setCidade(dto.getCidade());
+        if (dto.getUf() != null) this.endereco.setUf(dto.getUf());
+        if (dto.getCep() != null) this.endereco.setCep(dto.getCep());
+        if (dto.getNumero() != null) this.endereco.setNumero(dto.getNumero());
     }
 }

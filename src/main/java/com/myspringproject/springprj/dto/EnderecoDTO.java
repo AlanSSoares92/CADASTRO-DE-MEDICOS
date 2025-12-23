@@ -1,5 +1,6 @@
 package com.myspringproject.springprj.dto;
 
+import com.myspringproject.springprj.entity.Endereco;
 import jakarta.annotation.Nonnull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,5 +20,4 @@ public class EnderecoDTO {
     private String cep;
     private String uf;
     private String numero;
-
 }

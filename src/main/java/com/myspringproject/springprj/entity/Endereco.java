@@ -31,4 +31,14 @@ public class Endereco {
     @Nonnull
     private String uf;
     private String numero;
+
+    public Endereco(String logradouro, String complemento, String bairro, String cidade, String cep, String uf, String numero) {
+        this.logradouro = logradouro;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.cep = cep;
+        this.uf = uf;
+        this.numero = numero;
+    }
 }

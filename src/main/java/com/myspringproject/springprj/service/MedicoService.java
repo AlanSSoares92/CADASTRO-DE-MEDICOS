@@ -2,6 +2,7 @@ package com.myspringproject.springprj.service;
 
 import com.myspringproject.springprj.dto.MedicoAtualizacaoDTO;
 import com.myspringproject.springprj.dto.MedicoDTO;
+import com.myspringproject.springprj.dto.MedicoResponseDTO;
 import com.myspringproject.springprj.entity.MedicoEntity;
 import com.myspringproject.springprj.repository.MedicoRepository;
 import org.springframework.data.domain.Page;
@@ -26,10 +27,10 @@ public class MedicoService {
 //        }
 //        return medicoDTOList;
 //    }
-    public Page<MedicoDTO> listar(Pageable pageable) {
+    public Page<MedicoResponseDTO> listar(Pageable pageable) {
         return medicoRepository
                 .findAll(pageable)
-                .map(MedicoDTO::new);
+                .map(MedicoResponseDTO::new);
     }
 
     public void deleteById(Long id){
@@ -39,8 +40,9 @@ public class MedicoService {
     public MedicoEntity getMedicoById(Long id){
         return medicoRepository.findById(id).get();
     }
-    public MedicoEntity cadastrar(MedicoEntity medicoEntity){
-        return medicoRepository.save(medicoEntity);
+    public MedicoEntity cadastrar(MedicoDTO medicoDTO){
+        MedicoEntity entity = new MedicoEntity(medicoDTO);
+         return medicoRepository.save(entity);
     }
 
     @Transactional
