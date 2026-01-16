@@ -39,6 +39,12 @@ public class MedicoController {
 //        return ResponseEntity.ok(medicoService.getAll());
 //    }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<MedicoResponseDTO> getMedico(@PathVariable Long id){
+        MedicoEntity medico = medicoService.getMedicoById(id);
+        MedicoResponseDTO medicoResponseDTO = new MedicoResponseDTO(medico);
+        return ResponseEntity.ok(medicoResponseDTO);
+    }
     @GetMapping
     public Page<MedicoResponseDTO> listar(@PageableDefault(size = 5) Pageable pageable) {
         return medicoService.listar(pageable);

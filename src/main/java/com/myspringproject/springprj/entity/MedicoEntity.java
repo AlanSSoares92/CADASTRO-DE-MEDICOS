@@ -28,6 +28,8 @@ public class MedicoEntity {
     @Nonnull
     private String crm;
 
+    private boolean ativo;
+
     @Enumerated(EnumType.STRING)
     private Especialidade especialidade;
 
